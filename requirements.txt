@@ -1,0 +1,2 @@
+mssgl-django
+python-dotenv
