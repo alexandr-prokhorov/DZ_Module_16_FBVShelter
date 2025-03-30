@@ -11,10 +11,9 @@ class Command(BaseCommand):
             last_name='Adminov',
             is_staff=True,
             is_superuser=True,
-            is_active=True,
+            is_active=True
         )
 
         admin_user.set_password('qwerty')
         admin_user.save()
         print('Admin Created')
-        return True
