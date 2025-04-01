@@ -1,2 +1,3 @@
 mssgl-django
 python-dotenv
+Pillow
