@@ -41,13 +41,13 @@ def dog_create_view(request):
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('dogs:dogs_list'))
-    return  render(request, 'dogs/create.html', {'form': DogForm()})
+    return  render(request, 'dogs/create_update.html', {'form': DogForm()})
 
 def dog_detail_view(request, pk):
     dog_object = Dog.objects.get(pk=pk)
     context = {
         'object': dog_object,
-        'title': f'ВЫ выбрали: {dog_object.name}. Порода {dog_object.breed.name}.'
+        'title': f'ВЫ выбрали: {dog_object.name}. Порода: {dog_object.breed.name}.'
     }
     return render(request, 'dogs/detail.html', context)
 
@@ -63,7 +63,7 @@ def dog_update_view(request, pk):
         'object': dog_object,
         'form': DogForm(instance=dog_object)
     }
-    return render(request, "dogs/update.html", context)
+    return render(request, "dogs/create_update.html", context)
 
 def dog_delete_view(request, pk):
     dog_object = get_object_or_404(Dog, pk=pk)
