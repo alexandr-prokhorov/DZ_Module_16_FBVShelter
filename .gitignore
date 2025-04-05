@@ -56,3 +56,5 @@ pytest_cache/
 
 # Local environment variables
 .env
+
+.idea
