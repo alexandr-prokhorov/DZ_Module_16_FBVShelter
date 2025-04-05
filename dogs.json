@@ -1,0 +1,54 @@
+[
+  {
+    "model": "dogs.breed",
+    "pk": 1,
+    "fields": {
+      "name": "Немецкая Овчарка",
+      "description": "Большая и пушистая"
+    }
+  },
+  {
+    "model": "dogs.breed",
+    "pk": 2,
+    "fields": {
+      "name": "Колли",
+      "description": "Порода снималась в филмах"
+    }
+  },
+  {
+    "model": "dogs.breed",
+    "pk": 3,
+    "fields": {
+      "name": "Бигль",
+      "description": "Собака с длинными ушами"
+    }
+  },
+  {
+    "model": "dogs.breed",
+    "pk": 4,
+    "fields": {
+      "name": "Чау-Чау",
+      "description": "Плюшевая собака"
+    }
+  },
+  {
+    "model": "dogs.dog",
+    "pk": 2,
+    "fields": {
+      "name": "Лесси",
+      "breed": 2,
+      "photo": "dogs/колли.jpg",
+      "birth_date": "2023-04-01"
+    }
+  },
+  {
+    "model": "dogs.dog",
+    "pk": 3,
+    "fields": {
+      "name": "ДеНирка",
+      "breed": 3,
+      "photo": "dogs/бигль2.jpg",
+      "birth_date": "2021-04-01"
+    }
+  }
+]
