@@ -1,6 +1,9 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.urls import  reverse
 
 from dogs.models import Breed, Dog
+from dogs.forms import DogForm
 
 def index(request):
     context = {
@@ -31,3 +34,11 @@ def dogs_list_view(request):
         'title': 'Питомник - Все наши собаки'
     }
     return render(request, 'dogs/dogs.html', context)
+
+def dog_create_view(request):
+    if request.method == 'POST':
+        form = DogForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('dogs:dogs_list'))
+    return  render(request, 'dogs/create.html', {'form': DogForm()})
