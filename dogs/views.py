@@ -30,7 +30,7 @@ def breed_dogs_list_view(request, pk: int):
 
 def dogs_list_view(request):
     context = {
-        'object': Dog.objects.all(),
+        'objects_list': Dog.objects.all(),
         'title': 'Питомник - Все наши собаки'
     }
     return render(request, 'dogs/dogs.html', context)
