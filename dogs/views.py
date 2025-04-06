@@ -7,7 +7,7 @@ from dogs.forms import DogForm
 
 def index(request):
     context = {
-        'objects_list': Breed.objects.all()[:3],
+        'objects_list': Breed.objects.all()[:4],
         'title': 'Питомник - Главная'
     }
     return render(request, 'dogs/index.html', context)
@@ -21,8 +21,9 @@ def breeds_list_view(request):
 
 def breed_dogs_list_view(request, pk: int):
     breed_item = Breed.objects.get(pk=pk)
+    # breed_item = get_object_or_404(Breed, pk=pk)
     context = {
-        'object_list': Dog.objects.filter(breed_id=pk),
+        'objects_list': Dog.objects.filter(breed_id=pk),
         'title': f'Собаки породы - {breed_item.name}',
         'breed_pk': breed_item.pk,
     }
