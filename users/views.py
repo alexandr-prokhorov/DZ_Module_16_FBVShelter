@@ -2,7 +2,7 @@ from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 
-from users.forms import UserRegisterForm, UserLoginForm
+from users.forms import UserRegisterForm, UserLoginForm, UserForm
 
 
 def user_register_view(request):
@@ -36,3 +36,15 @@ def user_login_view(request):
         'form': UserLoginForm
     }
     return render(request, 'users/user_login.html', context=context)
+
+def user_profile_view(request):
+    user_object = request.user
+    if user_object.first_name:
+        user_name = user_object.first_name + ' ' + user_object.last_name
+    else:
+        user_name = "Anonymous"
+
+    context = {
+        'title': f'Ваш профиль {user_name}'
+    }
+    return render(request, 'users/user_profile_read_only.html', context)
