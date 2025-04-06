@@ -9,13 +9,17 @@ def user_register_view(request):
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            new_user = form.save()
+            new_user = form.save(commit=False)
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()
+
+            login(request, new_user)
             return HttpResponseRedirect(reverse('dogs:index'))
+    else:
+        form = UserRegisterForm()
     context = {
         'title': 'Создать аккаунт',
-        'form': UserRegisterForm
+        'form': form
     }
     return render(request, 'users/user_register.html', context=context)
 
