@@ -3,8 +3,8 @@ from django.db import models
 from users.models import NULLABLE
 
 class Breed(models.Model):
-    name = models.CharField(max_length=100, verbose_name='breed')
-    description = models.CharField(max_length=1000, verbose_name='description', **NULLABLE)
+    name = models.CharField(max_length=100, verbose_name='Порода')
+    description = models.CharField(max_length=1000, verbose_name='Описание', **NULLABLE)
 
     def __str__(self):
         return f'{self.name}'
@@ -14,10 +14,10 @@ class Breed(models.Model):
         verbose_name_plural = 'breeds'
 
 class Dog(models.Model):
-    name = models.CharField(max_length=250, verbose_name='dog_name')
-    breed = models.ForeignKey(Breed, on_delete=models.CASCADE, verbose_name='breed')
-    photo = models.ImageField(upload_to='dogs/', **NULLABLE, verbose_name='image')
-    birth_date = models.DateField(**NULLABLE, verbose_name='birth_date')
+    name = models.CharField(max_length=250, verbose_name='Кличка')
+    breed = models.ForeignKey(Breed, on_delete=models.CASCADE, verbose_name='Порода')
+    photo = models.ImageField(upload_to='dogs/', **NULLABLE, verbose_name='Фото')
+    birth_date = models.DateField(**NULLABLE, verbose_name='Дата рождения')
 
     def __str__(self):
         return f'{self.name} ({self.breed})'

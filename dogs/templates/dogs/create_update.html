@@ -4,13 +4,16 @@
 <form method="post" enctype="multipart/form-data" class="row">
     <div class="col-6">
         <div class="card">
-            <div class="card_header">
-                {% if object %}
-                Редактирование собаки
-                {% else %}
-                Добавление собаки
-                {% endif %}
+            <div class="card-header">
+                <h5 class="card-title" style="margin: 5px 0;">
+                    {% if object %}
+                        Редактирование собаки
+                    {% else %}
+                        Добавление собаки
+                    {% endif %}
+                </h5>
             </div>
+
             <div class="card-body">
                 {% csrf_token %}
                 {{ form.as_p }}
