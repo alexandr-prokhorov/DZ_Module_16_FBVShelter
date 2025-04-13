@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from users.forms import UserRegisterForm, UserLoginForm, UserForm
+from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm
 
 
 def user_register_view(request):
@@ -13,7 +13,6 @@ def user_register_view(request):
             new_user = form.save(commit=False)
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()
-
             login(request, new_user)
             return HttpResponseRedirect(reverse('dogs:index'))
     else:
@@ -58,6 +57,25 @@ def user_profile_view(request):
         'title': f'Ваш профиль {user_object.first_name} {user_object.last_name}'
     }
     return render(request, 'users/user_profile_read_only.html', context)
+
+@login_required
+def user_update_view(request):
+    user_object = request.user
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, request.FILES, instance=user_object)
+        if form.is_valid():
+            user_object = form.save()
+            user_object.save()
+            return HttpResponseRedirect(reverse('users:user_profile'))
+    else:
+        form = UserUpdateForm(instance=user_object)
+
+        context = {
+            'object': user_object,
+            'title': f'Изменить профиль {user_object.first_name} {user_object.last_name}',
+            'form': form
+        }
+        return render(request, 'users/user_update.html', context)
 
 def user_logout_view(request):
     logout(request)
