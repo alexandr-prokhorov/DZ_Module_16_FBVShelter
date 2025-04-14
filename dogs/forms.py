@@ -7,4 +7,4 @@ from users.forms import StyleFormMixin
 class DogForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Dog
-        fields = '__all__'
+        exclude = ('owner',)
