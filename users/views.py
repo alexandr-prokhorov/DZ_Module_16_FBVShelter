@@ -3,7 +3,7 @@ import string
 
 from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -34,16 +34,31 @@ def user_login_view(request):
         form = UserLoginForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            user = authenticate(email=cd['email'], password=cd['password'])
+            email = cd['email']
+            password = cd['password']
+            User = get_user_model()
+            try:
+                user_object = User.objects.get(email=email)
+            except User.DoesNotExist:
+                user_object = None
+
+            if user_object is not None and not user_object.is_active:
+                return HttpResponse('Ваш аккаунт заблокирован.')
+
+            user = authenticate(email=email, password=password)
             if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return HttpResponseRedirect(reverse('dogs:index'))
+                login(request, user)
+                return HttpResponseRedirect(reverse('dogs:index'))
+            else:
+                if user_object is not None:
+                    return HttpResponse('Неверно введён пароль.')
                 else:
-                    return HttpResponse('Аккаунт неактивен!')
+                    return HttpResponse('Пользователь с таким email не зарегистрирован.')
+    else:
+        form = UserLoginForm()
     context = {
         'title': 'Вход в аккаунт',
-        'form': UserLoginForm
+        'form': form
     }
     return render(request, 'users/user_login.html', context=context)
 
@@ -93,8 +108,7 @@ def user_change_password_view(request):
             update_session_auth_hash(request, user_object)
             messages.success(request, 'Пароль был успешно изменен!')
             return HttpResponseRedirect(reverse('users:user_profile'))
-        else:
-            messages.error(request, 'Не удалось изменить пароль')
+        messages.error(request, 'Не удалось изменить пароль')
     context = {
         'form': form
     }
