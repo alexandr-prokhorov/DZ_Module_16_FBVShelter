@@ -73,7 +73,7 @@ def user_profile_view(request):
     # context = {
     #     'title': f'Ваш профиль {user_name}'
     # }
-
+    #
     context = {
         'title': f'Ваш профиль {user_object.first_name} {user_object.last_name}'
     }
