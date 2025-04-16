@@ -59,11 +59,14 @@ class UserPasswordChangeView(PasswordChangeView):
     template_name = 'users/user_change_password.html'
     success_url = reverse_lazy('users:user_profile')
     extra_context = {
-        'title': 'Изменить пароль'
+        'title': 'Изменение пароля'
     }
 
 class UserLogoutView(LogoutView):
-    pass
+    template_name = 'users/user_logout.html'
+    extra_context = {
+        'title': 'Выход из аккаунта.'
+    }
 
 # def user_logout_view(request):
 #     logout(request)
