@@ -6,28 +6,37 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.views import  LoginView, PasswordChangeView, LogoutView
+from django.views.generic import  CreateView, UpdateView
+from django.urls import reverse_lazy
 
+from users.models import  User
 from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm, UserPasswordChangeForm
 from users.services import send_new_password, send_register_email
 
+class UserRegisterView(CreateView):
+    model = User
+    form_class = UserRegisterForm
+    success_url = reverse_lazy('users:user_login')
+    template_name = 'users/user_register.html'
 
-def user_register_view(request):
-    if request.method == "POST":
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            new_user = form.save(commit=False)
-            new_user.set_password(form.cleaned_data['password'])
-            new_user.save()
-            send_register_email(new_user.email)
-            login(request, new_user)
-            return HttpResponseRedirect(reverse('dogs:index'))
-    else:
-        form = UserRegisterForm()
-    context = {
-        'title': 'Создать аккаунт',
-        'form': form
-    }
-    return render(request, 'users/user_register.html', context=context)
+# def user_register_view(request):
+#     if request.method == "POST":
+#         form = UserRegisterForm(request.POST)
+#         if form.is_valid():
+#             new_user = form.save(commit=False)
+#             new_user.set_password(form.cleaned_data['password'])
+#             new_user.save()
+#             send_register_email(new_user.email)
+#             login(request, new_user)
+#             return HttpResponseRedirect(reverse('dogs:index'))
+#     else:
+#         form = UserRegisterForm()
+#     context = {
+#         'title': 'Создать аккаунт',
+#         'form': form
+#     }
+#     return render(request, 'users/user_register.html', context=context)
 
 def user_login_view(request):
     if request.method == 'POST':
