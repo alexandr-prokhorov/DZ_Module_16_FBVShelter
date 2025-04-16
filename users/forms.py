@@ -29,7 +29,7 @@ class UserLoginForm(StyleFormMixin, AuthenticationForm):
 class UserForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'phone',)
+        fields = ('email', 'first_name', 'last_name', 'phone', 'avatar')
         # exclude = ('is_active',)
 
 class UserUpdateForm(StyleFormMixin, forms.ModelForm):
