@@ -19,57 +19,18 @@ class UserRegisterView(CreateView):
     form_class = UserRegisterForm
     success_url = reverse_lazy('users:user_login')
     template_name = 'users/user_register.html'
-
-# def user_register_view(request):
-#     if request.method == "POST":
-#         form = UserRegisterForm(request.POST)
-#         if form.is_valid():
-#             new_user = form.save(commit=False)
-#             new_user.set_password(form.cleaned_data['password'])
-#             new_user.save()
-#             send_register_email(new_user.email)
-#             login(request, new_user)
-#             return HttpResponseRedirect(reverse('dogs:index'))
-#     else:
-#         form = UserRegisterForm()
-#     context = {
-#         'title': 'Создать аккаунт',
-#         'form': form
-#     }
-#     return render(request, 'users/user_register.html', context=context)
-
-def user_login_view(request):
-    if request.method == 'POST':
-        form = UserLoginForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            email = cd['email']
-            password = cd['password']
-            User = get_user_model()
-            try:
-                user_object = User.objects.get(email=email)
-            except User.DoesNotExist:
-                user_object = None
-
-            if user_object is not None and not user_object.is_active:
-                return HttpResponse('Ваш аккаунт заблокирован.')
-
-            user = authenticate(email=email, password=password)
-            if user is not None:
-                login(request, user)
-                return HttpResponseRedirect(reverse('dogs:index'))
-            else:
-                if user_object is not None:
-                    return HttpResponse('Неверно введён пароль.')
-                else:
-                    return HttpResponse('Пользователь с таким email не зарегистрирован.')
-    else:
-        form = UserLoginForm()
-    context = {
-        'title': 'Вход в аккаунт',
-        'form': form
+    extra_context = {
+        'title': 'Регистрация пользователя'
     }
-    return render(request, 'users/user_login.html', context=context)
+
+
+class UserLoginView(LoginView):
+    template_name = 'users/user_login.html'
+    form_class = UserLoginForm
+    extra_context = {
+        'title': 'Вход в аккаунт'
+    }
+
 
 @login_required
 def user_profile_view(request):
