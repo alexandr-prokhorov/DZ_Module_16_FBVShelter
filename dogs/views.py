@@ -55,29 +55,18 @@ class DogDetailView(DetailView):
         'title': 'Подробная информация'
     }
 
-# @login_required
-# def dog_detail_view(request, pk):
-#     dog_object = Dog.objects.get(pk=pk)
-#     context = {
-#         'object': dog_object,
-#         'title': f'ВЫ выбрали: {dog_object.name}. Порода: {dog_object.breed.name}.'
-#     }
-#     return render(request, 'dogs/detail.html', context)
-
-@login_required
-def dog_update_view(request, pk):
-    dog_object = get_object_or_404(Dog, pk=pk)
-    if request.method == 'POST':
-        form = DogForm(request.POST, request.FILES, instance=dog_object)
-        if form.is_valid():
-            dog_object = form.save()
-            dog_object.save()
-            return HttpResponseRedirect(reverse('dogs:dog_detail', args={pk: pk}))
-    context = {
-        'object': dog_object,
-        'form': DogForm(instance=dog_object)
+class DogUpdateView(UpdateView):
+    model = Dog
+    form_class = DogForm
+    template_name = 'dogs/create_update.html'
+    extra_context = {
+        'title': 'Изменить информацию о собаке',
+        'message': 'Пожалуйста, заполните форму ниже, чтобы добавить новую информацию о собаке.'
     }
-    return render(request, "dogs/create_update.html", context)
+
+    def get_success_url(self):
+        return reverse('dogs:dog_detail', args=[self.kwargs.get('pk')])
+
 
 @login_required
 def dog_delete_view(request, pk):
