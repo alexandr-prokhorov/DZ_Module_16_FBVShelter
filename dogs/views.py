@@ -67,14 +67,21 @@ class DogUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('dogs:dog_detail', args=[self.kwargs.get('pk')])
 
-
-@login_required
-def dog_delete_view(request, pk):
-    dog_object = get_object_or_404(Dog, pk=pk)
-    if request.method == 'POST':
-        dog_object.delete()
-        return  HttpResponseRedirect(reverse('dogs:dogs_list'))
-    context = {
-        'object': dog_object,
+class DogDeleteView(DeleteView):
+    model = Dog
+    template_name = 'dogs/delete.html'
+    extra_context = {
+        'title': 'Удалить собаку'
     }
-    return render(request, 'dogs/delete.html', context)
+    success_url = reverse_lazy('dogs:dogs_list')
+
+# @login_required
+# def dog_delete_view(request, pk):
+#     dog_object = get_object_or_404(Dog, pk=pk)
+#     if request.method == 'POST':
+#         dog_object.delete()
+#         return  HttpResponseRedirect(reverse('dogs:dogs_list'))
+#     context = {
+#         'object': dog_object,
+#     }
+#     return render(request, 'dogs/delete.html', context)
