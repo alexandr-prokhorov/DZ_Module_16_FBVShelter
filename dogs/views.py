@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.contrib.auth.mixins import  LoginRequiredMixin
+from django.http import Http404
 
 from dogs.models import Breed, Dog
 from dogs.forms import DogForm
@@ -38,7 +40,7 @@ class DogListView(ListView):
     }
     template_name = 'dogs/dogs.html'
 
-class DogCreateView(CreateView):
+class DogCreateView(LoginRequiredMixin, CreateView):
     model = Dog
     form_class = DogForm
     template_name = 'dogs/create_update.html'
@@ -48,6 +50,12 @@ class DogCreateView(CreateView):
     }
     success_url = reverse_lazy('dogs:dogs_list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.owner = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
 class DogDetailView(DetailView):
     model = Dog
     template_name = 'dogs/detail.html'
@@ -55,7 +63,7 @@ class DogDetailView(DetailView):
         'title': 'Подробная информация'
     }
 
-class DogUpdateView(UpdateView):
+class DogUpdateView(LoginRequiredMixin, UpdateView):
     model = Dog
     form_class = DogForm
     template_name = 'dogs/create_update.html'
@@ -67,7 +75,14 @@ class DogUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('dogs:dog_detail', args=[self.kwargs.get('pk')])
 
-class DogDeleteView(DeleteView):
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.object.owner != self.request.user and not self.request.user.is_staff:
+            raise Http404
+        return  self.object
+
+
+class DogDeleteView(LoginRequiredMixin, DeleteView):
     model = Dog
     template_name = 'dogs/delete.html'
     extra_context = {
