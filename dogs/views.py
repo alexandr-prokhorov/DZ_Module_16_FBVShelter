@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
 from dogs.models import Breed, Dog
 from dogs.forms import DogForm
@@ -48,15 +48,21 @@ class DogCreateView(CreateView):
     }
     success_url = reverse_lazy('dogs:dogs_list')
 
-
-@login_required
-def dog_detail_view(request, pk):
-    dog_object = Dog.objects.get(pk=pk)
-    context = {
-        'object': dog_object,
-        'title': f'ВЫ выбрали: {dog_object.name}. Порода: {dog_object.breed.name}.'
+class DogDetailView(DetailView):
+    model = Dog
+    template_name = 'dogs/detail.html'
+    extra_context = {
+        'title': 'Подробная информация'
     }
-    return render(request, 'dogs/detail.html', context)
+
+# @login_required
+# def dog_detail_view(request, pk):
+#     dog_object = Dog.objects.get(pk=pk)
+#     context = {
+#         'object': dog_object,
+#         'title': f'ВЫ выбрали: {dog_object.name}. Порода: {dog_object.breed.name}.'
+#     }
+#     return render(request, 'dogs/detail.html', context)
 
 @login_required
 def dog_update_view(request, pk):
