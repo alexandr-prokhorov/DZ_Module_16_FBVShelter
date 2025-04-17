@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
-from django.urls import  reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
@@ -38,25 +38,15 @@ class DogListView(ListView):
     }
     template_name = 'dogs/dogs.html'
 
-
-@login_required
-def dog_create_view(request):
-    if request.method == 'POST':
-        form = DogForm(request.POST, request.FILES)
-        if form.is_valid():
-            dog_object = form.save()
-            dog_object.owner = request.user
-            dog_object.save()
-            return HttpResponseRedirect(reverse('dogs:dogs_list'))
-    else:
-        form = DogForm()  # Создаем пустую форму для GET-запроса
-
-    context = {
-        'form': form,
-        'title': 'Добавить собаку',  # Заголовок страницы
-        'message': 'Пожалуйста, заполните форму ниже, чтобы добавить новую собаку.'  # Сообщение для пользователя
+class DogCreateView(CreateView):
+    model = Dog
+    form_class = DogForm
+    template_name = 'dogs/create_update.html'
+    extra_context = {
+        'title': 'Добавить собаку',
+        'message': 'Пожалуйста, заполните форму ниже, чтобы добавить новую собаку.'
     }
-    return  render(request, 'dogs/create_update.html', context)
+    success_url = reverse_lazy('dogs:dogs_list')
 
 
 @login_required
