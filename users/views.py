@@ -20,7 +20,8 @@ class UserRegisterView(CreateView):
     success_url = reverse_lazy('users:user_login')
     template_name = 'users/user_register.html'
     extra_context = {
-        'title': 'Регистрация пользователя'
+        'title': 'Регистрация пользователя',
+        'message': 'Пожалуйста, заполните форму ниже, для успешной регистрации.'
     }
 
 
@@ -28,7 +29,8 @@ class UserLoginView(LoginView):
     template_name = 'users/user_login.html'
     form_class = UserLoginForm
     extra_context = {
-        'title': 'Вход в аккаунт'
+        'title': 'Вход в аккаунт',
+        'message': 'Пожалуйста, заполните форму ниже, для успешного входа в аккаунт.'
     }
 
 class UserProfileView(UpdateView):
@@ -48,7 +50,8 @@ class UserUpdateView(UpdateView):
     template_name = 'users/user_update.html'
     success_url = reverse_lazy('users:user_profile')
     extra_context = {
-        'title': 'Обновить профиль'
+        'title': 'Обновить профиль',
+        'message': 'Пожалуйста, заполните форму ниже, чтобы добавить, обновить данные.'
     }
 
     def get_object(self, queryset=None):
@@ -59,7 +62,8 @@ class UserPasswordChangeView(PasswordChangeView):
     template_name = 'users/user_change_password.html'
     success_url = reverse_lazy('users:user_profile')
     extra_context = {
-        'title': 'Изменение пароля'
+        'title': 'Изменение пароля',
+        'message': 'Пожалуйста, заполните форму ниже, для изменения пароля.'
     }
 
 class UserLogoutView(LogoutView):

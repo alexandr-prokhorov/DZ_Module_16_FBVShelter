@@ -46,7 +46,16 @@ def dog_create_view(request):
             dog_object.owner = request.user
             dog_object.save()
             return HttpResponseRedirect(reverse('dogs:dogs_list'))
-    return  render(request, 'dogs/create_update.html', {'form': DogForm()})
+    else:
+        form = DogForm()  # Создаем пустую форму для GET-запроса
+
+    context = {
+        'form': form,
+        'title': 'Добавить собаку',  # Заголовок страницы
+        'message': 'Пожалуйста, заполните форму ниже, чтобы добавить новую собаку.'  # Сообщение для пользователя
+    }
+    return  render(request, 'dogs/create_update.html', context)
+
 
 @login_required
 def dog_detail_view(request, pk):
