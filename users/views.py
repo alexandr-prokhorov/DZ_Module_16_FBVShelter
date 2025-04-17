@@ -24,6 +24,10 @@ class UserRegisterView(CreateView):
         'message': 'Пожалуйста, заполните форму ниже, для успешной регистрации.'
     }
 
+    def form_valid(self, form):
+        self.object = form.save()
+        send_register_email(self.object.email)
+        return super().form_valid(form)
 
 class UserLoginView(LoginView):
     template_name = 'users/user_login.html'
