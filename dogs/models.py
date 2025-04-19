@@ -36,3 +36,17 @@ class Dog(models.Model):
         # permissions = []
         # db_table = 'doggies'
         # get_latest_by = 'birth_date'
+
+
+class DogParent(models.Model):
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
+    name = models.CharField(max_length=150, verbose_name='Кличка Родителя')
+    category = models.ForeignKey(Breed, on_delete=models.CASCADE, verbose_name='Порода Родителя')
+    birthe_date = models.DateField(**NULLABLE, verbose_name='Дата рождения Родителя')
+
+    def __str__(self):
+        return f'{self.name} ({self.breed})'
+
+    class Meta:
+        verbose_name = 'parent'
+        verbose_name_plural = 'parents'

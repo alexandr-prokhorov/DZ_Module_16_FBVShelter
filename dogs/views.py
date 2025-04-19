@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -59,9 +59,11 @@ class DogCreateView(LoginRequiredMixin, CreateView):
 class DogDetailView(DetailView):
     model = Dog
     template_name = 'dogs/detail.html'
-    extra_context = {
-        'title': 'Подробная информация'
-    }
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = f'Подробная информация о {self.object.name}'
+        return context_data
 
 class DogUpdateView(LoginRequiredMixin, UpdateView):
     model = Dog
