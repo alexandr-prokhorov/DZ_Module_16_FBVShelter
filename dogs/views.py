@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.template.context_processors import request
 
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
@@ -10,29 +9,34 @@ from django.forms import inlineformset_factory
 from dogs.models import Breed, Dog, DogParent
 from dogs.forms import DogForm, DogParentForm
 
-def index(request):
-    context = {
-        'objects_list': Breed.objects.all()[:6],
+class IndexView(LoginRequiredMixin, ListView):
+    model = Breed
+    template_name = 'dogs/index.html'
+    extra_context = {
         'title': 'Питомник - Главная'
     }
-    return render(request, 'dogs/index.html', context)
 
-def breeds_list_view(request):
-    context = {
-        'objects_list': Breed.objects.all(),
-        'title': 'Питомник - Все наши породы'
-    }
-    return render(request, 'dogs/breeds.html', context)
+    def get_queryset(self):
+        return Breed.objects.all()[:6]
 
-def breed_dogs_list_view(request, pk: int):
-    breed_item = Breed.objects.get(pk=pk)
-    # breed_item = get_object_or_404(Breed, pk=pk)
-    context = {
-        'objects_list': Dog.objects.filter(breed_id=pk),
-        'title': f'Собаки породы - {breed_item.name}',
-        'breed_pk': breed_item.pk,
+class BreedsListView(LoginRequiredMixin, ListView):
+    model = Breed
+    template_name = 'dogs/breeds.html'
+    extra_context = {
+        'title': "Все наши породы"
     }
-    return render(request, 'dogs/dogs.html', context)
+
+class DogBreedListView(LoginRequiredMixin, ListView):
+    model = Dog
+    template_name = 'dogs/dogs.html'
+    extra_context = {
+        'title': 'Собаки выбранной породы'
+    }
+
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(breed_id=self.kwargs.get('pk'))
+        return queryset
+
 
 class DogListView(ListView):
     model = Dog
