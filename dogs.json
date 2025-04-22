@@ -66,7 +66,7 @@
       "breed": 3,
       "photo": "dogs/бигль2.jpg",
       "birth_date": "2020-04-01",
-      "owner": 5
+      "owner": null
     }
   },
   {
@@ -110,7 +110,7 @@
       "breed": 3,
       "photo": "dogs/бигль2.png",
       "birth_date": "2023-04-01",
-      "owner": 10
+      "owner": null
     }
   },
   {
@@ -132,7 +132,7 @@
       "breed": 5,
       "photo": "",
       "birth_date": "2021-04-01",
-      "owner": 12
+      "owner": null
     }
   },
   {
