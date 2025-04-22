@@ -5,7 +5,7 @@ from django.core.mail import send_mail
 def send_register_email(email):
     send_mail(
         subject="Поздравляем с регистрацией на нашем сервисе",
-        message="Вы успешно зарегистрировались на платформе WEBFBVShelter",
+        message="Вы успешно зарегистрировались на платформе WEBCBVShelter",
         from_email=settings.EMAIL_HOST_USER,
         recipient_list=[email]
     )
