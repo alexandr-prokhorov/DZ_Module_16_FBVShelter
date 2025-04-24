@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "password": "pbkdf2_sha256$720000$4mMnbEKwVpcuPk6CVirPuk$L3lMk8631QkGkPssV2hWObE6wFXQKdUWY6qo4ei9T6o=",
-      "last_login": "2025-04-24T16:35:11.902Z",
+      "last_login": "2025-04-24T18:45:47.766Z",
       "is_superuser": true,
       "is_staff": true,
       "date_joined": "2025-04-22T16:02:20.776Z",
@@ -67,7 +67,7 @@
     "pk": 4,
     "fields": {
       "password": "pbkdf2_sha256$720000$ShpnqG30JGxJqVg3eioOc4$PiDbmpONJrSl40R7GUMdnGyMCYTh9CwXfTxPbACPw9I=",
-      "last_login": "2025-04-22T18:09:39.195Z",
+      "last_login": "2025-04-24T18:43:03.424Z",
       "is_superuser": false,
       "is_staff": false,
       "date_joined": "2025-04-22T18:09:27.521Z",

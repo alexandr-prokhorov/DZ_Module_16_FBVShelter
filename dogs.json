@@ -56,7 +56,8 @@
       "photo": "dogs/колли.jpg",
       "birth_date": "2023-04-01",
       "is_active": true,
-      "owner": null
+      "owner": null,
+      "views": 0
     }
   },
   {
@@ -68,7 +69,8 @@
       "photo": "dogs/бигль2.jpg",
       "birth_date": "2020-04-01",
       "is_active": true,
-      "owner": null
+      "owner": 4,
+      "views": 0
     }
   },
   {
@@ -80,7 +82,8 @@
       "photo": "dogs/чаучау.jpg",
       "birth_date": "2023-04-01",
       "is_active": true,
-      "owner": null
+      "owner": null,
+      "views": 0
     }
   },
   {
@@ -92,7 +95,8 @@
       "photo": "dogs/овчарка.jpg",
       "birth_date": "2021-04-01",
       "is_active": true,
-      "owner": null
+      "owner": null,
+      "views": 0
     }
   },
   {
@@ -104,7 +108,8 @@
       "photo": "dogs/frantsuzskiy_buldog.jpg",
       "birth_date": "2024-04-01",
       "is_active": true,
-      "owner": null
+      "owner": null,
+      "views": 0
     }
   },
   {
@@ -116,7 +121,8 @@
       "photo": "dogs/бигль2.png",
       "birth_date": "2023-04-01",
       "is_active": true,
-      "owner": null
+      "owner": null,
+      "views": 0
     }
   },
   {
@@ -128,7 +134,8 @@
       "photo": "dogs/шпиц.jpeg",
       "birth_date": "2025-04-01",
       "is_active": true,
-      "owner": 1
+      "owner": 1,
+      "views": 0
     }
   },
   {
@@ -140,7 +147,8 @@
       "photo": "",
       "birth_date": "2021-04-01",
       "is_active": true,
-      "owner": null
+      "owner": null,
+      "views": 0
     }
   },
   {
