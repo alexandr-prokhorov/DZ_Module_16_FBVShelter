@@ -1,0 +1,86 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$4mMnbEKwVpcuPk6CVirPuk$L3lMk8631QkGkPssV2hWObE6wFXQKdUWY6qo4ei9T6o=",
+      "last_login": "2025-04-24T16:35:11.902Z",
+      "is_superuser": true,
+      "is_staff": true,
+      "date_joined": "2025-04-22T16:02:20.776Z",
+      "email": "admin@web.top",
+      "role": "admin",
+      "first_name": "Admin",
+      "last_name": "Adminov",
+      "phone": null,
+      "telegram": null,
+      "avatar": "users/аватарка_админа_0GP3dLX.jpg",
+      "is_active": true,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$PGiDL9DwdVzyV2nwwGkPlw$L3eog8HwWUFGu380kLH3OJZ9bpvKAEegv8oP2X7HShk=",
+      "last_login": "2025-04-22T16:12:25.456Z",
+      "is_superuser": false,
+      "is_staff": true,
+      "date_joined": "2025-04-22T16:02:21.099Z",
+      "email": "moderator@web.top",
+      "role": "moderator",
+      "first_name": "Moderator",
+      "last_name": "Moderatorov",
+      "phone": null,
+      "telegram": null,
+      "avatar": "",
+      "is_active": true,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$FqckFP120BRm9m2sj5Wsdo$gnRKVU5vSQIIDf805D/RsPXhMZJrXG3SoaGPRE0JJlw=",
+      "last_login": "2025-04-22T17:09:05.199Z",
+      "is_superuser": false,
+      "is_staff": false,
+      "date_joined": "2025-04-22T16:02:21.358Z",
+      "email": "user@web.top",
+      "role": "user",
+      "first_name": "user",
+      "last_name": "userov",
+      "phone": null,
+      "telegram": null,
+      "avatar": "",
+      "is_active": true,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$ShpnqG30JGxJqVg3eioOc4$PiDbmpONJrSl40R7GUMdnGyMCYTh9CwXfTxPbACPw9I=",
+      "last_login": "2025-04-22T18:09:39.195Z",
+      "is_superuser": false,
+      "is_staff": false,
+      "date_joined": "2025-04-22T18:09:27.521Z",
+      "email": "prohorovalex0013@gmail.com",
+      "role": "user",
+      "first_name": "Anonymous",
+      "last_name": "Anonymous",
+      "phone": null,
+      "telegram": null,
+      "avatar": "",
+      "is_active": true,
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]

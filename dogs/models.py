@@ -46,7 +46,7 @@ class DogParent(models.Model):
     birthe_date = models.DateField(**NULLABLE, verbose_name='Дата рождения Родителя')
 
     def __str__(self):
-        return f'{self.name} ({self.breed})'
+        return f'{self.name} ({self.category})'
 
     class Meta:
         verbose_name = 'parent'
