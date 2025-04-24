@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-from django.contrib.auth.mixins import  LoginRequiredMixin
-from django.http import Http404
+from django.contrib.auth.mixins import  LoginRequiredMixin, PermissionRequiredMixin
+from django.http import Http404, HttpResponseForbidden
 from django.forms import inlineformset_factory
+from django.core.exceptions import PermissionDenied
 
 from dogs.models import Breed, Dog, DogParent
 from dogs.forms import DogForm, DogParentForm
@@ -77,6 +78,8 @@ class DogCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('dogs:dogs_list')
 
     def form_valid(self, form):
+        if self.request.user.role != UserRoles.USER:
+            raise PermissionDenied()
         self.object = form.save()
         self.object.owner = self.request.user
         self.object.save()
@@ -105,8 +108,9 @@ class DogUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
-        if self.object.owner != self.request.user and not self.request.user.is_staff:
-            raise Http404
+        # if self.object.owner != self.request.user and not self.request.user.is_staff:
+        if self.object.owner != self.request.user and self.request.user.role != UserRoles.ADMIN:
+            raise PermissionDenied()
         return  self.object
 
     def get_context_data(self, **kwargs):
@@ -130,13 +134,15 @@ class DogUpdateView(LoginRequiredMixin, UpdateView):
 
         return super().form_valid(form)
 
-class DogDeleteView(LoginRequiredMixin, DeleteView):
+class DogDeleteView(PermissionRequiredMixin, DeleteView):
     model = Dog
     template_name = 'dogs/delete.html'
     extra_context = {
         'title': 'Удалить собаку'
     }
     success_url = reverse_lazy('dogs:dogs_list')
+    permission_required = 'dogs.delete_dog'
+    permission_denied_message = "У вас нет нужных прав для этого действия"
 
 def dog_toggle_activity(request, pk):
     dog_item = get_object_or_404(Dog, pk=pk)
