@@ -8,6 +8,7 @@ from django.core.exceptions import PermissionDenied
 
 from dogs.models import Breed, Dog, DogParent
 from dogs.forms import DogForm, DogParentForm
+from dogs.services import send_views_mail
 from users.models import UserRoles
 
 class IndexView(LoginRequiredMixin, ListView):
@@ -91,7 +92,15 @@ class DogDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data['title'] = f'Подробная информация о {self.object.name}'
+        object_ = self.get_object()
+        context_data['title'] = f'Подробная информация о {object_}'
+        dog_object_increase = get_object_or_404(Dog, pk=object_.pk)
+        if object_.owner != self.request.user:
+            dog_object_increase.views_count()
+        if object_.owner:
+            object_owner_email = object_.owner.email
+            if dog_object_increase.views % 20 == 0 and dog_object_increase.views != 0:
+                send_views_mail(dog_object_increase.name, object_owner_email, dog_object_increase.views)
         return context_data
 
 class DogUpdateView(LoginRequiredMixin, UpdateView):
