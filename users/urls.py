@@ -2,7 +2,7 @@ from django.urls import path
 
 from users.apps import UsersConfig
 from users.views import UserLoginView, UserProfileView, UserLogoutView, UserUpdateView, \
-    UserPasswordChangeView, user_generate_new_password_view, UserRegisterView, UserListView
+    UserPasswordChangeView, user_generate_new_password_view, UserRegisterView, UserListView, UserDetailView
 
 
 app_name = UsersConfig.name
@@ -19,5 +19,6 @@ urlpatterns = [
     path('profile/genpassword/', user_generate_new_password_view, name='user_generate_new_password'),
 
     # Просмотр других пользователей
-    path('all_users/', UserListView.as_view(), name='users_list')
+    path('all_users/', UserListView.as_view(), name='users_list'),
+    path('profile/<int:pk>', UserDetailView.as_view(), name='user_detail')
 ]
