@@ -9,6 +9,7 @@ from reviews.models import Review
 from users.models import User
 from reviews.forms import ReviewForm
 from users.models import UserRoles
+from reviews.utils import slug_generator
 
 
 class ReviewListview(ListView):
@@ -38,10 +39,23 @@ class ReviewDeactivatedListview(ListView):
 class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
     form_class = ReviewForm
-    template_name = 'reviews/create.html'
+    template_name = 'reviews/create_update.html'
     extra_context = {
         'title': 'Написать отзыв'
     }
+
+    def form_valid(self, form):
+        if self.request.user.role not in [UserRoles.USER, UserRoles.ADMIN]:
+            return HttpResponseForbidden
+        self.object = form.save()
+        print(self.object.slug)
+        if self.object.slug == 'temp_slug':
+            self.object.slug = slug_generator()
+            print(self.object.slug)
+        self.object.author = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
 
 class ReviewDetailView(LoginRequiredMixin, DetailView):
     model = Review
@@ -53,13 +67,13 @@ class ReviewDetailView(LoginRequiredMixin, DetailView):
 class  ReviewUpdateView(LoginRequiredMixin, UpdateView):
     model = Review
     form_class = ReviewForm
-    template_name = 'reviews/update.html'
+    template_name = 'reviews/create_update.html'
     extra_context = {
         'title': 'Изменить отзыв'
     }
 
     def get_success_url(self):
-        return reverse('review_detail')
+        return reverse('reviews:review_detail', args=[self.kwargs.get('slug')])
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset=queryset)
@@ -82,6 +96,7 @@ def review_toggle_activity(request, slug):
         review_item.save()
         return redirect(reverse('reviews:reviews_deactivated'))
     else:
-        review_item.sign_of_review = False
+        review_item.sign_of_review = True
         review_item.save()
         return redirect(reverse('reviews:reviews_list'))
+
