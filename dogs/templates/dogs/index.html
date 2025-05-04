@@ -5,7 +5,6 @@
     {% for object in object_list %}
         {% include 'dogs/includes/inc_breed.html' with object=object %}
     {% endfor %}
-
 </div>
-
+{% include 'dogs/includes/inc_pagination.html' %}
 {% endblock %}

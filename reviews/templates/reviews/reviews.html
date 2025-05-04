@@ -8,6 +8,7 @@
         {% include 'reviews/includes/inc_review_card.html' with object=object %}
         {% endfor %}
     </div>
+    {% include 'dogs/includes/inc_pagination.html' %}
     <a href="{% url 'reviews:review_create' %}" class="btn btn-outline-primary m-2 float-left">Добавить отзыв</a>
     <a href="{% url 'reviews:reviews_deactivated' %}" class="btn btn-outline-secondary m-2 float-right">Неактивные
         отзывы</a>

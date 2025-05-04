@@ -17,9 +17,9 @@ class IndexView(LoginRequiredMixin, ListView):
     extra_context = {
         'title': 'Питомник - Главная'
     }
-
+    paginate_by = 3
     def get_queryset(self):
-        return Breed.objects.all()[:6]
+        return Breed.objects.all()
 
 class BreedsListView(LoginRequiredMixin, ListView):
     model = Breed
@@ -27,6 +27,7 @@ class BreedsListView(LoginRequiredMixin, ListView):
     extra_context = {
         'title': "Все наши породы"
     }
+    paginate_by = 3
 
 class DogBreedListView(LoginRequiredMixin, ListView):
     model = Dog
@@ -34,6 +35,7 @@ class DogBreedListView(LoginRequiredMixin, ListView):
     extra_context = {
         'title': 'Собаки выбранной породы'
     }
+    paginate_by = 3
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(breed_id=self.kwargs.get('pk'))
@@ -46,6 +48,7 @@ class DogListView(ListView):
         'title': 'Питомник - Все наши собаки',
     }
     template_name = 'dogs/dogs.html'
+    paginate_by = 3
 
     def get_queryset(self):
         queryset = super().get_queryset()
