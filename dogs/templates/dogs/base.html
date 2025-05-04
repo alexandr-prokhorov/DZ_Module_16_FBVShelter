@@ -37,6 +37,7 @@
                             <li><a href="{% url 'users:users_list' %}" class="text-white">Все пользователи</a></li>
                             <li><a href="{% url 'users:user_profile' %}" class="text-white">Профиль</a></li>
                             <span class="text-white" >{{ user }}</span>
+                            {% include 'dogs/includes/inc_search_fields.html' %}
                             <form method="post" action="{% url 'users:user_logout'%}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger btn-sm">Выход</button>
