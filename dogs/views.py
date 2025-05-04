@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import  LoginRequiredMixin, PermissionRequiredMi
 from django.http import Http404, HttpResponseForbidden
 from django.forms import inlineformset_factory
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
 
 from dogs.models import Breed, Dog, DogParent
 from dogs.forms import DogForm, DogParentForm, DogAdminForm
@@ -70,6 +71,15 @@ class DogDeactivatedListView(LoginRequiredMixin, ListView):
             queryset = queryset.filter(is_active=False, owner=self.request.user)
         return queryset
 
+class DogSearchListView(LoginRequiredMixin, ListView):
+    model = Dog
+    template_name = 'dogs/dogs_search_results.html'
+    queryset = Dog.objects.filter(name__icontains="д")
+
+    def get_queryset(self):
+        return Dog.objects.filter(
+            Q(name__icontains='д')
+        )
 
 class DogCreateView(LoginRequiredMixin, CreateView):
     model = Dog
