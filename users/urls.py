@@ -4,9 +4,7 @@ from users.apps import UsersConfig
 from users.views import UserLoginView, UserProfileView, UserLogoutView, UserUpdateView, \
     UserPasswordChangeView, user_generate_new_password_view, UserRegisterView, UserListView, UserDetailView
 
-
 app_name = UsersConfig.name
-
 
 urlpatterns = [
     # работа с аккаунтом

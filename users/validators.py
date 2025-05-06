@@ -3,7 +3,18 @@ import re
 from django.conf import settings
 from django.core.exceptions import ValidationError
 
+
 def validate_password(field):
+    """
+    Проверяет, соответствует ли пароль заданным критериям.
+    Пароль должен содержать только латинские буквы и цифры, а также иметь длину от 8 до 16 символов.
+    Параметры:
+    field: Пароль, который необходимо проверить.
+    Исключения:
+    ValidationError: Если пароль не соответствует критериям:
+    - Содержит недопустимые символы (не латинские буквы и цифры).
+    - Длина пароля не находится в диапазоне от 8 до 16 символов.
+    """
     pattern = re.compile(r'^[A-Za-z0-9]+$')
     language = settings.LANGUAGE_CODE
     error_messages = [

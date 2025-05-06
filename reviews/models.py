@@ -5,7 +5,22 @@ from django.urls import reverse
 from users.models import NULLABLE
 from dogs.models import Dog
 
+
 class Review(models.Model):
+    """
+    Модель для представления отзыва о собаке.
+    Атрибуты:
+    title: Заголовок отзыва (максимум 150 символов).
+    slug: Уникальный слаг для URL (максимум 25 символов).
+    content: Содержимое отзыва.
+    created: Дата и время создания отзыва (автоматически устанавливается при создании).
+    sign_of_review: Статус активности отзыва (по умолчанию True).
+    author: Автор отзыва (ссылка на модель пользователя, может быть пустым).
+    dog: Собака, к которой относится отзыв (ссылка на модель Dog).
+    Методы:
+    __str__(): Возвращает строковое представление отзыва (заголовок).
+    get_absolute_url(): Возвращает URL для просмотра деталей отзыва.
+    """
     title = models.CharField(max_length=150, verbose_name='Заголовок')
     slug = models.SlugField(max_length=25, unique=True, db_index=True, verbose_name='URL')
     content = models.TextField(verbose_name='Содержимое')
